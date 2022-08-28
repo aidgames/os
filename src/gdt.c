@@ -1,7 +1,7 @@
 #include "gdt.h"
 
 void init_gdt(){
-	static gdt_entry_bits gdt[6]; // one null segment, two ring 0 segments, two ring 3 segments, TSS segment
+	static struct gdt_entry_bits gdt[6]; // one null segment, two ring 0 segments, two ring 3 segments, TSS segment
 	// (ring 0 segments)
 
 	struct gdt_entry_bits *ring3_code = &gdt[3];
@@ -11,7 +11,7 @@ void init_gdt(){
 	ring3_code->base_low = 0;
 	ring3_code->accessed = 0;
 	ring3_code->read_write = 1; // since this is a code segment, specifies that the segment is readable
-	ring3_code->conforming = 0; // does not matter for ring 3 as no lower privilege level exists
+	//ring3_code->conforming = 0; // does not matter for ring 3 as no lower privilege level exists
 	ring3_code->code = 1;
 	ring3_code->code_data_segment = 1;
 	ring3_code->DPL = 3; // ring 3
@@ -24,6 +24,6 @@ void init_gdt(){
 	ring3_code->base_high = 0;
 	*ring3_data = *ring3_code; // contents are similar so save time by copying
 	ring3_data->code = 0; // not code but data
-	install_tss(&gdt[5]); // TSS segment will be the fifth 
+	write_tss(&gdt[5]); // TSS segment will be the fifth 
 	flush_tss();
 }
