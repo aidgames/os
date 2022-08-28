@@ -30,9 +30,9 @@ void write_tss(struct gdt_entry_bits *g) {
  
 	// Ensure the TSS is initially zero'd.
 	memset(&tss_entry, 0, sizeof tss_entry);
- 
-	tss_entry.ss0  = REPLACE_KERNEL_DATA_SEGMENT;  // Set the kernel stack segment.
-	tss_entry.esp0 = REPLACE_KERNEL_STACK_ADDRESS; // Set the kernel stack pointer.
+ 	register uint32_t stack_addr asm ("esp");
+	tss_entry.ss0  = 1;  // Set the kernel stack segment.
+	tss_entry.esp0 = stack_addr;  //REPLACE_KERNEL_STACK_ADDRESS; // Set the kernel stack pointer.
 	//note that CS is loaded from the IDT entry and should be the regular kernel code segment
 }
  
