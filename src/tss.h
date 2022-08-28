@@ -1,11 +1,8 @@
 #ifndef TSS_H_
 #define TSS_H_
 
-#include "gdt.h"
 #include <stdint.h>
 
-
-extern struct gdt_entry_bits;
 
 struct tss_entry_struct {
 	uint32_t prev_tss; // The previous TSS - with hardware task switching these form a kind of backward linked list.
@@ -37,11 +34,11 @@ struct tss_entry_struct {
 	uint16_t trap;
 	uint16_t iomap_base;
 } __packed;
- 
+
 typedef struct tss_entry_struct tss_entry_t;
 
 void flush_tss(void);
-void write_tss(gdt_entry_bits *g);
+void write_tss(struct gdt_entry_bits *g);
 void set_kernel_stack(uint32_t stack);
 
 #endif

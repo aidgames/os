@@ -6,7 +6,7 @@ tss_entry_t tss_entry;
 
 extern void flush_tss(void); 
 
-void write_tss(gdt_entry_bits *g) {
+void write_tss(struct gdt_entry_bits *g) {
 	// Compute the base and limit of the TSS for use in the GDT entry.
 	uint32_t base = (uint32_t) &tss_entry;
 	uint32_t limit = sizeof tss_entry;
