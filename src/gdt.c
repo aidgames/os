@@ -4,8 +4,8 @@ void init_gdt(){
 	static gdt_entry_bits gdt[6]; // one null segment, two ring 0 segments, two ring 3 segments, TSS segment
 	// (ring 0 segments)
 
-	gdt_entry_bits *ring3_code = &gdt[3];
-	gdt_entry_bits *ring3_data = &gdt[4];
+	struct gdt_entry_bits *ring3_code = &gdt[3];
+	struct gdt_entry_bits *ring3_data = &gdt[4];
 
 	ring3_code->limit_low = 0xFFFF;
 	ring3_code->base_low = 0;
