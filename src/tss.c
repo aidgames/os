@@ -1,5 +1,5 @@
 #include "tss.h"
-
+#include <string.h>
 
 // Note: some of the GDT entry struct field names may not match perfectly to the TSS entries.
 tss_entry_t tss_entry;

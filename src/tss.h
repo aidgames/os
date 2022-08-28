@@ -2,7 +2,7 @@
 #define TSS_H_
 
 #include <stdint.h>
-
+#include "gdt.h"
 
 struct tss_entry_struct {
 	uint32_t prev_tss; // The previous TSS - with hardware task switching these form a kind of backward linked list.
@@ -33,7 +33,7 @@ struct tss_entry_struct {
 	uint32_t ldt;
 	uint16_t trap;
 	uint16_t iomap_base;
-} __packed;
+};
 
 typedef struct tss_entry_struct tss_entry_t;
 
