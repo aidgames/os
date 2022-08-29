@@ -17,6 +17,11 @@ void outb(uint16_t port, uint8_t val){
     asm volatile("outb %1, %0" : : "dN"(port), "a"(val));
 }
 
+void io_wait(void)
+{
+    outb(0x80, 0);
+}
+
 int32_t com1_is_transmit_empty() {
 	return inb(PORT_COM1 + 5) & 0x20;
 }

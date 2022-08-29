@@ -12,6 +12,7 @@ extern kernel_main	        ;kmain определена в C-файле
 
 %include 'src/kernel/asm/gdt.asm'
 %include 'src/kernel/asm/tss.asm'
+%include 'src/kernel/asm/idt.asm'
 
 start:
   cli 			;блокировка прерываний

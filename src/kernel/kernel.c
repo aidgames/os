@@ -1,5 +1,6 @@
-#include "tty.h"
-#include "port.h"
+#include <tty.h>
+#include <port.h>
+#include <pic.h>
 
 #define KEYBOARD_STATUS_PORT 0x64
 #define KEYBOARD_DATA_PORT 0x60
