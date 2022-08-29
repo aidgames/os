@@ -16,7 +16,7 @@ src/libc.a: $(LIBC_OBJECTS)
 	ar rcs src/libc.a $(LIBC_OBJECTS)
 
 src/os.bin: $(KERNEL_OBJECTS) src/libc.a $(KSRC)/boot.o
-	ld -r -m elf_i386 -o src/os.bin -T $(KSRC)/linker.ld $(KSRC)/boot.o $(KERNEL_OBJECTS) src/libc.a
+	ld -m elf_i386 -o src/os.bin -T $(KSRC)/linker.ld $(KSRC)/boot.o $(KERNEL_OBJECTS) src/libc.a
 
 .PHONY: clean
 clean:
