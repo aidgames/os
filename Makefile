@@ -22,4 +22,4 @@ src/os.bin: $(KERNEL_OBJECTS) src/libc.a
 
 .PHONY: clean
 clean:
-	rm $(KERNEL_OBJECTS) $(LIBC_OBJECTS) src/os.bin src/libc.a
+	rm $(KERNEL_OBJECTS) $(LIBC_OBJECTS) src/os.bin src/libc.a $(KSRC)/boot.o
