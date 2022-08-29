@@ -1,9 +1,7 @@
 KSRC=src/kernel
 LIBC=src/libc
-KERNEL_SOURCE_C = $(wildcard $(KSRC)/*.c)
-KERNEL_OBJECTS = $(patsubst %.c,%.o,$(KERNEL_SOURCE_C))
-LIBC_SOURCE_C = $(wildcard $(LIBC)/*.c)
-LIBC_OBJECTS = $(patsubst %.c,%.o,$(LIBC_SOURCE_C))
+KERNEL_OBJECTS = $(patsubst %.c,%.o,$(wildcard $(KSRC)/*.c))
+LIBC_OBJECTS = $(patsubst %.c,%.o,$(wildcard $(LIBC)/*.c))
 
 ALL: src/os.bin
 
