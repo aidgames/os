@@ -1,33 +1,25 @@
-all: clean init os.bin
+KSRC=src/kernel
+LIBC=src/libc
+KERNEL_SOURCE_C = $(wildcard $(KSRC)/*.c)
+KERNEL_OBJECTS = $(patsubst %.c,%.o,$(KERNEL_SOURCE_C))
+LIBC_SOURCE_C = $(wildcard $(LIBC)/*.c)
+LIBC_OBJECTS = $(patsubst %.c,%.o,$(LIBC_SOURCE_C))
 
-boot.o: src/boot.asm
-	nasm -f elf32 src/boot.asm -o build/boot.o
+ALL: src/os.bin
 
-kernel.o: src/kernel.c
-	gcc -m32 -c src/kernel.c -o build/kernel.o
+$(KSRC)/boot.o: $(KSRC)/boot.asm
+	nasm -f elf32 $(KSRC)/boot.asm -o $(KSRC)/boot.o
 
-tty.o: src/tty.c
-	gcc -m32 -c src/tty.c -o build/tty.o
-
-gdt.o: src/gdt.c
-	gcc -m32 -c src/gdt.c -o build/gdt.o
-
-tss.o: src/tss.c
-	gcc -m32 -c src/tss.c -o build/tss.o
-
-port.o: src/port.c
-	gcc -m32 -c src/port.c -o build/port.o
-
-memset.o: src/memset.c
-	gcc -m32 -c src/memset.c -o build/memset.o
+%.o: %.c
+	gcc -m32 -c $< -I $(LIBC)/include -I $(KSRC)/include -o $@
 
 
-os.bin: boot.o kernel.o tty.o port.o tss.o gdt.o memset.o
-	ld -m elf_i386 -T src/linker.ld -o build/os.bin build/boot.o build/tty.o build/memset.o build/tss.o build/gdt.o build/port.o build/kernel.o
+src/libc.a: $(LIBC_OBJECTS)
+	ar rcs src/libc.a $(LIBC_OBJECTS)
 
+src/os.bin: $(KERNEL_OBJECTS) src/libc.a
+	ld -r -m elf_i386 -o src/os.bin -T $(KSRC)/linker.ld $(KSRC)/boot.o $(KERNEL_OBJECTS) src/libc.a
 
+.PHONY: clean
 clean:
-	rm build -rf || true
-
-init:
-	mkdir build
+	rm $(KERNEL_OBJECTS) $(LIBC_OBJECTS) src/os.bin src/libc.a

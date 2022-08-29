@@ -10,8 +10,8 @@ section .text
 global start
 extern kernel_main	        ;kmain определена в C-файле
 
-%include 'src/asm/gdt.asm'
-%include 'src/asm/tss.asm'
+%include 'src/kernel/asm/gdt.asm'
+%include 'src/kernel/asm/tss.asm'
 
 start:
   cli 			;блокировка прерываний
