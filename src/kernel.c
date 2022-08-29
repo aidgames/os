@@ -1,4 +1,4 @@
-#include "terminal.h"
+#include "tty.h"
 #include "port.h"
 
 #define KEYBOARD_STATUS_PORT 0x64

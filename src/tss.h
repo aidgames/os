@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "gdt.h"
+#include "mem.h"
 
 struct tss_entry_struct {
 	uint32_t prev_tss; // The previous TSS - with hardware task switching these form a kind of backward linked list.
